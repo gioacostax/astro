@@ -1,0 +1,21 @@
+---
+import Head, { type Props as HeadProps } from './head.astro';
+
+interface Props extends HeadProps {
+  class?: string;
+}
+
+const { class: _class, ...rest } = Astro.props;
+---
+
+<html lang="es">
+  <Head {...rest} />
+  <body class="mx-auto flex min-h-screen max-w-5xl flex-col px-8 sm:px-16" id="root">
+    <main
+      class={['flex flex-col justify-center py-12', _class].filter(Boolean).join(' ')}
+      transition:animate="fade"
+    >
+      <slot />
+    </main>
+  </body>
+</html>

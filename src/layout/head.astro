@@ -1,0 +1,90 @@
+---
+import { getImage } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
+
+import '@/styles.css';
+import logoImg from '@/assets/logo.svg';
+import socialImg from '@/assets/social.webp';
+import { GA_TRACKING_ID } from '@/config';
+import env from '@/env';
+
+export interface Props {
+  articleDate?: string;
+  description?: string;
+  title?: string;
+}
+
+const url = new URL(Astro.request.url);
+
+const social = await getImage({ format: 'webp', height: 418, src: socialImg, width: 800 });
+
+const {
+  articleDate,
+  description = '¡Hola!, soy Gio, desarrollador front-end enfocado en React y TypeScript.',
+  title = 'astro',
+} = Astro.props;
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content={description} name="description" />
+
+  <meta content={articleDate ? 'article' : 'website'} property="og:type" />
+  <meta content={`${title} - astro`} property="og:title" />
+  <meta content={description} property="og:description" />
+  <meta content={url} property="og:url" />
+  <meta content={`${title} - astro`} property="og:site_name" />
+  <meta content="es_CO" property="og:locale" />
+  <meta content={social.src} property="og:image" />
+  <meta content="1200" property="og:image:width" />
+  <meta content="630" property="og:image:height" />
+  {
+    articleDate && (
+      <>
+        <meta content="astro" property="article:author" />
+        <meta content={articleDate} property="article:published_time" />
+      </>
+    )
+  }
+
+  <meta content="summary_large_image" property="twitter:card" />
+  <meta content={url} property="twitter:url" />
+  <meta content={`${title} - astro`} property="twitter:title" />
+  <meta content={description} property="twitter:description" />
+  <meta content={social.src} property="twitter:image" />
+
+  <title>{title} - astro</title>
+
+  <link href={url} rel="canonical" />
+  <link href={`${env.APP_BASE_PATH}sitemap-index.xml`} rel="sitemap" />
+  <link
+    href={`${env.APP_BASE_PATH}/rss.xml`}
+    rel="alternate"
+    title={title}
+    type="application/rss+xml"
+  />
+
+  <link href={`${env.APP_BASE_PATH}/favicon.ico`} rel="icon" sizes="32x32" />
+  <link href={logoImg.src} rel="icon" type="image/svg+xml" />
+
+  <script
+    is:inline
+    set:html={`(function(e){function t(e){document.documentElement.classList.toggle('dark',
+localStorage.theme?localStorage.theme==='dark':!e.matches)};
+window.addEventListener('storage',t);e.addEventListener('change',
+t);t(e);document.addEventListener('astro:page-load',t)})(
+window.matchMedia('(prefers-color-scheme: light)'));
+`}
+  />
+  <script
+    is:inline
+    set:html={`window.onload=()=>{(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${GA_TRACKING_ID}');}`}
+  />
+
+  <ClientRouter />
+</head>

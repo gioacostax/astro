@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth text-[14px] leading-7 antialiased;
+  }
+
+  body {
+    @apply bg-slate-100 font-mono text-slate-700 dark:bg-bg-main dark:text-slate-300;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold font-sans text-slate-700 dark:text-slate-200;
+  }
+
+  strong {
+    @apply font-bold text-slate-800 dark:text-slate-200;
+  }
+}
+
+@layer components {
+  .prose {
+    :where(h1):not(:where(.not-prose,.not-prose *)) {
+      @apply before:pr-3 text-3xl before:text-primary-main before:content-['#'] mb-6;
+    }
+
+    :where(h2):not(:where(.not-prose,.not-prose *)) {
+      @apply before:pr-2 text-2xl before:text-primary-main before:content-['#'] mb-2 pt-6;
+    }
+
+    :where(p):not(:where(.not-prose,.not-prose *)) {
+      @apply mb-5;
+    }
+
+    :where(a):not(:where(.not-prose,.not-prose *)) {
+      @apply font-bold text-primary-main underline underline-offset-4 hover:text-primary-light;
+    }
+
+    :where(ul):not(:where(.not-prose,.not-prose *)) {
+      @apply my-6 ml-6;
+    }
+
+    :where(li):not(:where(.not-prose,.not-prose *)) {
+      @apply  before:text-primary-light list-disc pl-2 ml-4;
+    }
+
+    :where(pre):not(:where(.not-prose,.not-prose *)) {
+      @apply sm:ml-6 border-l-2 border-slate-300 py-6 sm:pl-8 pl-6 dark:border-slate-800 my-6 text-sm;
+    }
+
+    :where(p code, h2 code, h3 code):not(:where(.not-prose,.not-prose *)) {
+      @apply rounded-md py-1 px-2 dark:bg-slate-800 dark:text-teal-400 font-bold italic text-sm bg-slate-200 text-teal-600 font-mono;
+    }
+  }
+}
+
+.astro-code,
+.astro-code span {
+  background-color: transparent !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+html.dark .astro-code,
+html.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: transparent !important;
+}

@@ -1,0 +1,11 @@
+---
+import logo from '@/assets/logo.svg?raw';
+import Norris from '@/components/react/norris';
+import Layout from '@/layout/index.astro';
+---
+
+<Layout class="flex flex-1 flex-col items-center justify-center gap-8">
+  <span class="w-24"><Fragment set:html={logo} /></span>
+  <h1 class="text-center text-3xl font-bold">Astro + React</h1>
+  <Norris client:idle />
+</Layout>
